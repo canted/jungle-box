@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Breakroom • Listening test</title>
+<style>body{background:#202921;color:#f3ecda;max-width:640px;margin:12vh auto;padding:24px;font:18px system-ui}h1{font:italic 52px Georgia;margin-bottom:8px}button{background:#354538;color:inherit;border:1px solid #93a183;padding:14px;font:inherit;border-radius:6px;margin:4px}button[aria-pressed=true]{background:#d2eaa0;color:#202921}input{width:100%;accent-color:#d2eaa0}p{line-height:1.55}output{font-family:monospace}</style>
+<h1>Breakroom</h1><p>Eight bars at 168 BPM · Amen → Think → Amen</p>
+<button id="play">Play loop</button><button id="a" aria-pressed="true">A · Breakroom</button><button id="b" aria-pressed="false">B · Desktop</button>
+<p><input aria-label="Position in loop" type="range" id="seek" min="0" max="1000" value="0"><output id="bar">Bar 1</output></p>
+<p>Listen for the clipped Amen in bar 2, the two Fill and Drop combinations in bars 3–4, and Catch carrying into Think in bar 6. Home brings Amen back in bar 8.</p>
+<script>
+const wav=AUDIO_PAIR;
+let ctx,buffers,voices=[],gains=[],choice=0,start=0,offset=0,playing=false;
+const duration=Math.round(128*48000*60/168/4)/48000;
+function position(){return playing?(ctx.currentTime-start+offset+duration)%duration:offset}
+function stop(){offset=position();for(const voice of voices)voice.stop();voices=[];playing=false;play.textContent='Play loop'}
+function begin(){start=ctx.currentTime+.02;voices=buffers.map((buffer,i)=>{const src=ctx.createBufferSource();src.buffer=buffer;src.loop=true;src.connect(gains[i]);src.start(start,offset);return src});playing=true;play.textContent='Pause'}
+play.onclick=async()=>{if(playing){stop();return}play.disabled=true;try{ctx??=new AudioContext();await ctx.resume();if(!buffers){buffers=await Promise.all(wav.map(x=>ctx.decodeAudioData(Uint8Array.from(atob(x),c=>c.charCodeAt(0)).buffer)));gains=buffers.map((_,i)=>{const g=ctx.createGain();g.gain.value=Number(i===choice);g.connect(ctx.destination);return g})}begin()}catch(e){bar.textContent=e.message}finally{play.disabled=false}};
+[a,b].forEach((button,i)=>button.onclick=()=>{choice=i;[a,b].forEach((el,j)=>el.setAttribute('aria-pressed',j===i));gains.forEach((g,j)=>g.gain.setTargetAtTime(Number(i===j),ctx.currentTime,.003))});
+seek.oninput=()=>{const resume=playing;if(resume)stop();offset=Math.min(duration-.001,seek.value/1000*duration);if(resume)begin()};
+function update(){const p=position();seek.value=p/duration*1000;bar.value='Bar '+(1+Math.floor(p/duration*8));requestAnimationFrame(update)}update();
+</script></html>

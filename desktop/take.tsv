@@ -1,0 +1,23 @@
+0 faders 42 12 50 50
+2 store
+16 faders 20 85 75 5
+32 faders 88 85 75 50
+40 drop
+44 fill
+46 lift
+50 fill
+55 drop
+62 lift
+64 faders 98 85 90 86
+72 catch
+77 bank 1
+85 uncaught
+89 drop
+92 fill
+94 lift
+96 faders 100 65 85 100
+104 catch
+107 fill
+110 uncaught
+111 bank 0
+112 home

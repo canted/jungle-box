@@ -1,0 +1,25 @@
+.DS_Store
+node_modules/
+__pycache__/
+.venv/
+.build-venv/
+.impeccable/hook.cache.json
+.impeccable/review/
+.impeccable/live/
+# Generated desktop audio and captures
+desktop/bank/
+desktop/renders/
+desktop/percussion/*.wav
+desktop/percussion/*.json
+desktop/percussion/*.f32
+desktop/percussion/native.tsv
+desktop/percussion/reference.tsv
+desktop/angle-studies/*.wav
+desktop/interactions/*.wav
+# Downloaded firmware toolchains and build output
+hardware/.west/
+hardware/build/
+hardware/modules/
+hardware/zephyr/
+hardware/zephyr-sdk-*/
+hardware/sdk-minimal.tar.xz

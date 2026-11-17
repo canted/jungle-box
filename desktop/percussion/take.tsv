@@ -1,0 +1,16 @@
+0 faders 36 50 50 70
+0 record
+0 move 0 75
+2 move 0 68
+5 move 0 78
+8 move 0 70
+11 move 0 82
+12 commit
+64 record
+64 move 2 85
+64 move 0 75
+66 move 0 68
+69 move 0 78
+72 move 0 70
+75 move 0 82
+76 commit

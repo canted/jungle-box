@@ -1,0 +1,32 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font",
+        "value": "avenir next",
+        "createdAt": "2026-11-17T20:33:04.878Z",
+        "reason": "User selected the DIN preview pairing, which includes Avenir Next body text; documented in DESIGN.md."
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "junglebox.html"
+        ],
+        "createdAt": "2026-11-17T20:33:04.966Z",
+        "reason": "User confirmed exact shortcut green rgb(22, 161, 0); retain that color on the instrument surfaces. Other muted text adjusted darker."
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "junglebox.html"
+        ],
+        "createdAt": "2026-11-17T20:33:28.725Z",
+        "reason": "Verified rendered top-panel and left-panel: flush boundaries are intentional adjoining seams of the user-approved unfolded SP-1 layout; text and controls have their own inset spacing."
+      }
+    ]
+  }
+}

@@ -1,0 +1,84 @@
+/* Shared reading and type roles; the instrument's physical geometry stays local. */
+:root {
+  --paper: #83f2d1;
+  --font-reading: Arial, Helvetica, sans-serif;
+  --font-display: Georgia, serif;
+  --font-shortcut: ui-monospace, SFMono-Regular, Consolas, monospace;
+  --type-body: 1rem;
+  --type-meta: .875rem;
+  --type-section: 1.5rem;
+  --type-subsection: 1.125rem;
+  --type-title: 2.75rem;
+  --reading-measure: 65ch;
+}
+body { background: var(--paper); font-family: var(--font-reading); font-size: var(--type-body); }
+header { flex-wrap: wrap; gap: .5rem 1rem; }
+h1, .study-page h1 {
+  font: italic 700 var(--type-title)/1.1 var(--font-display);
+  letter-spacing: -.03em;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+.guide {
+  max-width: min(100%, var(--reading-measure));
+  color: #30332f;
+  font-size: var(--type-body);
+  line-height: 1.6;
+}
+.guide p, .angle-audition p { font-size: var(--type-body); line-height: 1.6; margin-block: 0 1em; }
+.angle-audition p { margin-top: 1em; }
+.angle-audition label, summary, .grid strong { font-weight: 700; }
+.bank-picker label { font-weight: 700; }
+.guide details[open] > summary { margin-bottom: .65em; }
+#state { min-width: 0; overflow-wrap: anywhere; }
+.grid output { font-size: .75rem; }
+.tempo, #state { font-size: .8125rem; font-variant-numeric: tabular-nums; }
+kbd, .pads kbd, .transport-key { font-family: var(--font-shortcut); }
+.study-page { color: #30332f; font: var(--type-body)/1.6 var(--font-reading); }
+.study-page h1 { margin-block: 0 .65em; }
+.study-page h2 { font: 700 var(--type-section)/1.25 var(--font-reading); letter-spacing: -.015em; margin-block: 2em .75em; }
+.study-page h3 { font: 700 var(--type-subsection)/1.35 var(--font-reading); margin: 0; }
+.study-page p { max-width: var(--reading-measure); margin-block: 0 1em; }
+.study-page section p, .study-page label, .study-page section > span {
+  font-size: var(--type-meta); line-height: 1.5; font-variant-numeric: tabular-nums;
+}
+.study-page section p { margin-block: .35em 1em; }
+.study-page section strong { font-size: 1rem; font-weight: 700; }
+.study-page a { text-underline-offset: .2em; }
+.study-page ::selection { background: #255a57; color: #fff; }
+.study-page :focus-visible { outline: 3px solid #9e3028; outline-offset: 3px; }
+@media (max-width: 560px) {
+  :root { --type-title: 2.25rem; }
+  .angle-audition label { display: block; margin-bottom: .5rem; }
+  .angle-study-page section { flex-direction: column; align-items: stretch; gap: .75rem; }
+  .angle-study-page audio { width: 100%; max-width: 100%; }
+}
+.grid small { hyphens: auto; }
+
+/* Approved DIN pairing for the canonical instrument. */
+.instrument-page {
+  --font-reading: 'Avenir Next', Arial, sans-serif;
+  --font-display: 'DIN Condensed', 'Arial Narrow', sans-serif;
+  --type-title: 3.5rem;
+  --shortcut-color: rgb(22, 161, 0);
+  --muted: #355b58;
+}
+.instrument-page h1 {
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: .015em;
+  text-transform: uppercase;
+}
+.instrument-page .device { font-family: var(--font-reading); }
+.instrument-page .grid strong {
+  font-family: var(--font-display);
+  font-size: 20px;
+  letter-spacing: .025em;
+}
+.instrument-page kbd,
+.instrument-page .pads kbd,
+.instrument-page .transport-key { color: var(--shortcut-color); }
+@media (max-width: 560px) {
+  .instrument-page { --type-title: 2.75rem; }
+  .instrument-page .grid strong { font-size: 16px; }
+}

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jungle Box</title>
+<link rel="stylesheet" href="junglebox.css?v=typeset">
+<link rel="stylesheet" href="typography.css?v=typeset">
+</head>
+<body class="instrument-page">
+<main>
+<header><h1>Jungle Box</h1><span class="tempo">168 BPM</span></header>
+<div class="bank-picker"><label for="bank">Break</label><select id="bank"></select><p id="state" role="status">Ready</p></div>
+<section class="device" aria-label="SP-1 unfolded instrument: top, left, face and right panels">
+ <div class="top-panel panel"><div class="volume"><button id="volume-down" aria-label="Volume down" aria-keyshortcuts="-">−</button><button id="volume-up" aria-label="Volume up" aria-keyshortcuts="+ =">+</button><span>Volume <output id="volume-value">80%</output></span></div><span class="speaker" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+ <div class="left-panel panel"><div class="rocker"><button id="previous-break" aria-label="Previous break" aria-keyshortcuts="ArrowUp"><span class="rocker-arrow up" aria-hidden="true"></span></button><button id="next-break" aria-label="Next break" aria-keyshortcuts="ArrowDown"><span class="rocker-arrow down" aria-hidden="true"></span></button></div><span class="vertical-label"><kbd>↑ ↓</kbd><span>Select break</span></span></div>
+ <div class="face panel"><div class="face-main"><div class="face-heading"><span>Jungle Box</span><span>SP–1</span></div><div class="face-space" aria-hidden="true"></div><section class="grid" aria-label="Faders"></section><div class="pads" aria-label="Performance buttons"></div></div><div class="plastic-strip" aria-hidden="true"><span class="play-mark"></span><span class="function-marks"><i></i><i></i></span></div></div>
+ <div class="right-panel panel"><button id="play">Play</button><kbd class="transport-key">Space</kbd><div class="side-indicators"><div id="meter" aria-label="Beat indicators"></div></div><button id="side" aria-pressed="false"><kbd>G</kbd> Percussion gesture</button></div>
+</section>
+<div class="guide"><p>Hold G and sweep a fader for spaced hits, or wiggle it quickly for a roll from the selected break. Release to loop. Tap G without moving to clear.</p><details open><summary>Playing the instrument</summary><p>Tap Fill for a run into the bar line. Tap again to cut it short. Hold Catch to repeat a fragment. Hold Drop to shed the kick and expose the shuffle. Release for a pickup into the next beat. Hold Home to store the groove, tap to recall it. Tap Home (H) four times evenly to set tempo (60–240 BPM). Keep taps short; holds, other controls, and pauses clear the tap sequence. Space controls transport. Use ↑ / ↓ to select a break and + / − (or =) for volume. Hold G/Gesture and use Select break ↑ / ↓ to raise/lower tempo by 1 BPM without changing breaks or the percussion loop. Keep ↑ / ↓ held to repeat, slowly at first and then faster; release either control to stop. Arrow keys adjust a fader when it is focused.</p><p>Reply reshapes every second bar. Try Angle high and Weight low, then bring Weight up. Hold Drop across both bars and tap Fill before the turnaround.</p></details><details><summary>Audition the selected break’s cuts</summary><p id="auditions"></p></details></div>
+</main>
+<script src="amen.js"></script><script src="breaks.js"></script><script src="instrument.js?v=tempo-hold-12s"></script>
+</body>
+</html>

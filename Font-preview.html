@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jungle Box — font comparison</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#83f2d1;color:#243331;font:16px/1.5 Arial,sans-serif}header{padding:20px 24px;border-bottom:1px solid #588f8c}h1{font-size:20px;margin:0 0 12px}nav{display:flex;gap:8px;flex-wrap:wrap}button{font:inherit;padding:8px 14px;border:1px solid #446e6b;background:transparent;color:inherit;border-radius:4px;cursor:pointer}button[aria-pressed=true]{background:#243331;color:#fff}button:focus-visible{outline:3px solid #a13228;outline-offset:3px}p{margin:12px 0 0;font-size:14px}iframe{display:block;width:100%;height:calc(100vh - 180px);min-height:600px;border:0}
+</style>
+<header><h1>Jungle Box · font comparison</h1><nav aria-label="Font pairing">
+<button data-font="original" aria-pressed="false">Original</button>
+<button data-font="avenir" aria-pressed="true">Avenir Next</button>
+<button data-font="din" aria-pressed="false">DIN Condensed</button>
+<button data-font="typewriter" aria-pressed="false">American Typewriter</button>
+</nav><p id="description">Avenir Next Heavy title + Avenir Next text. Rounded, clear, and compact.</p></header>
+<iframe src="junglebox.html" title="Jungle Box font preview"></iframe>
+<script>
+const variants={
+ original:{description:'Georgia italic title + Arial text. The current version.',css:''},
+ avenir:{description:'Avenir Next Heavy title + Avenir Next text. Rounded, clear, and compact.',css:`:root{--font-reading:'Avenir Next',sans-serif;--font-display:'Avenir Next',sans-serif;--type-title:2.65rem}h1{font-style:normal;font-weight:900;letter-spacing:-.035em}.device{font-family:var(--font-reading)}@media(max-width:560px){:root{--type-title:2.15rem}}`},
+ din:{description:'DIN Condensed Bold title + Avenir Next text. Tall lettering with a printed equipment feel.',css:`:root{--font-reading:'Avenir Next',sans-serif;--font-display:'DIN Condensed',sans-serif;--type-title:3.5rem}h1{font-style:normal;font-weight:700;letter-spacing:.015em;text-transform:uppercase}.device{font-family:var(--font-reading)}.grid strong{font-family:'DIN Condensed',sans-serif;font-size:20px;letter-spacing:.025em}@media(max-width:560px){:root{--type-title:2.75rem}.grid strong{font-size:16px}}`},
+ typewriter:{description:'American Typewriter Bold title + Avenir Next text. Chunky slab serifs with a playful, tactile feel.',css:`:root{--font-reading:'Avenir Next',sans-serif;--font-display:'American Typewriter',serif;--type-title:2.5rem}h1{font-style:normal;font-weight:700;letter-spacing:-.03em}.device{font-family:var(--font-reading)}@media(max-width:560px){:root{--type-title:2rem}}`}
+};
+let selected='avenir';const frame=document.querySelector('iframe');
+function apply(){const doc=frame.contentDocument;if(!doc?.head)return;let style=doc.getElementById('font-comparison');if(!style){style=doc.createElement('style');style.id='font-comparison';doc.head.append(style)}style.textContent=variants[selected].css;document.querySelector('#description').textContent=variants[selected].description;document.querySelectorAll('button').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.font===selected)))}
+frame.addEventListener('load',apply);document.querySelector('nav').addEventListener('click',event=>{if(!event.target.dataset.font)return;selected=event.target.dataset.font;apply()});
+</script>
+</html>

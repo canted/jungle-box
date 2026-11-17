@@ -1,0 +1,26 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+import {OfflineAudioContext} from 'node-web-audio-api';
+process.chdir(import.meta.dirname);
+const sources=['amen.js','breaks.js','instrument.js'].map(f=>fs.readFileSync('../'+f,'utf8'));
+const element=()=>({value:'',append(){},add(){},appendChild:element,querySelector:element,setAttribute(){},classList:{toggle(){}}});
+const cases=[
+ ['Reference',42,50,50],['Light',15,50,50],['Driven',90,50,50],
+ ['Short',42,20,50],['Long',42,85,50],['Occasional reply',42,50,15],
+ ['Strong reply',42,50,90],['Light + long',15,85,30],['Driven + short',90,20,90],['Driven + long',90,85,90]
+];
+const angles=[['Open answer',40],['Turnaround',60],['Offbeat kick',100]];
+for(const [index,[name,w,reach,reply]] of cases.entries())for(const [bank,bankName] of [[0,'Amen'],[1,'Think']])for(const [,angle] of angles){
+ // Low Reply needs multiple phrases to demonstrate answer frequency.
+ const steps=reply<40?128:64,rate=48000,frames=Math.ceil(steps*60/168/4*rate),offline=new OfflineAudioContext(2,frames,rate);
+ const c=vm.createContext({offline,atob,Uint8Array,document:{querySelector:element,createElement:element},Option:class{},setTimeout(){},clearTimeout(){}});
+ const run=code=>vm.runInContext(code,c);sources.forEach(run);
+ await run(`(async()=>{ctx=offline;master=ctx.createDynamicsCompressor();master.threshold.value=-9;master.ratio.value=3;master.connect(ctx.destination);active=banks[${bank}];active.buffer=await ctx.decodeAudioData(Uint8Array.from(atob(active.wav),c=>c.charCodeAt(0)).buffer);runBus=ctx.createGain();runBus.connect(master);menu.value=${bank};angleMenu.value='original';values.forEach((v,j)=>v.value=[${w},${angle},${reply},${reach}][j]);for(let n=0;n<${steps};n++)scheduleStep()})()`);
+ const audio=await offline.startRendering(),wav=Buffer.alloc(44+frames*4);wav.write('RIFF');wav.writeUInt32LE(wav.length-8,4);wav.write('WAVEfmt ',8);wav.writeUInt32LE(16,16);wav.writeUInt16LE(1,20);wav.writeUInt16LE(2,22);wav.writeUInt32LE(rate,24);wav.writeUInt32LE(rate*4,28);wav.writeUInt16LE(4,32);wav.writeUInt16LE(16,34);wav.write('data',36);wav.writeUInt32LE(frames*4,40);
+ let peak=0;for(let channel=0;channel<2;channel++){const data=audio.getChannelData(channel);for(let n=0;n<frames;n++){peak=Math.max(peak,Math.abs(data[n]));wav.writeInt16LE(Math.max(-32768,Math.min(32767,Math.round(data[n]*32767))),44+n*4+channel*2);}}
+ if(!Number.isFinite(peak)||peak===0||peak>=1)throw Error(`Invalid ${name} ${bankName} ${angle}: ${peak}`);
+ fs.writeFileSync(`interactions/${bank}-${index}-${angle}.wav`,wav);
+ console.log(`${bankName} · ${name} · Angle ${angle} · peak ${peak.toFixed(3)}`);
+}
+const panels=[[0,'Amen'],[1,'Think']].map(([bank,name])=>`<div class="bank" id="bank-${bank}" ${bank?'hidden':''}><h2>${name}</h2>${cases.map(([label,w,reach,reply],i)=>`<section><h3>${label}</h3><p>Weight ${w} · Reach ${reach} · Reply ${reply}${reply<40?' · eight bars':' · four bars'}</p><div class="clips">${angles.map(([title,a])=>`<label>${title} · Angle ${a}<audio controls loop preload="none" src="${bank}-${i}-${a}.wav"></audio></label>`).join('')}</div></section>`).join('')}</div>`).join('');
+fs.writeFileSync('interactions/Listen.html',`<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Jungle Box · Slider combinations</title><style>*{box-sizing:border-box}body{max-width:1080px;margin:40px auto;padding:0 24px;font:16px/1.6 system-ui;background:#83f2d1;color:#30332f}h1{line-height:1.2}p{max-width:75ch}.clips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}section{border-top:1px solid #a6afb5;padding:18px 0 26px}h3{margin:0}section p{font-size:13px;margin:4px 0 14px}label{font-size:14px}audio{display:block;width:100%;margin-top:8px}select{font:inherit;padding:8px;background:#fff;border:1px solid #a6afb5;border-radius:4px}a{color:inherit;text-underline-offset:3px}audio:focus-visible,select:focus-visible{outline:3px solid #9e3028}@media(max-width:650px){.clips{grid-template-columns:1fr}body{padding:0 16px}}</style><link rel="stylesheet" href="../../typography.css?v=typeset"><body class="study-page interaction-study-page"><h1>Jungle Box · Slider combinations</h1><p>The approved Angle patterns, with changes to Weight, Reach and Reply. Start with Reference, then compare one control at a time before the combined settings. All recordings use the same output gain; quiet settings have not been normalized louder.</p><p>Weight changes reinforcement and drive. Reach changes length and blends shuffle cuts. Reply introduces answers progressively, then strengthens the response. Low-Reply clips run longer so you can hear the changing answer frequency.</p><label for="bank">Break </label><select id="bank"><option value="0">Amen</option><option value="1">Think</option></select> · <a href="../angle-studies/Listen.html">Angle studies</a> · <a href="../../junglebox.html">Play Jungle Box</a>${panels}<script>const clips=document.querySelectorAll('audio');clips.forEach(a=>a.addEventListener('play',()=>clips.forEach(b=>{if(a!==b)b.pause()})));document.querySelector('#bank').onchange=e=>{clips.forEach(a=>a.pause());document.querySelectorAll('.bank').forEach(p=>p.hidden=p.id!=='bank-'+e.target.value)}</script></html>`);

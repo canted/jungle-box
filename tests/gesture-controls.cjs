@@ -1,0 +1,14 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const s=fs.readFileSync(require('node:path').join(__dirname,'../instrument.js'),'utf8');
+let bpm=168,bankChanges=0,played;
+const c=vm.createContext({ctx:{currentTime:0},running:false,values:[{value:'42',oninput(){}}],side:{setAttribute(){}},status(){},tempoHold:{stop(){}},homeTaps:{reset(){}},setTempo:n=>{bpm=Math.max(60,Math.min(240,n));c.tempo=bpm},tempo:bpm,menu:{value:'0',onchange(){bankChanges++}},banks:[{},{}],step:0,next:0,tick:.1,active:{name:'Amen'},playPercussion:(...args)=>played=args});
+vm.runInContext('let gestureHeld=false,gestureTempo=false,gestureBase=null,draft,motion=[],motif=new Map([[0,[1,0,0,.5]]]);'+s.slice(s.indexOf('function startGesture('),s.indexOf('// Capture on'))+s.slice(s.indexOf('function changeBreak('),s.indexOf("for(const [id,delta]")),c);
+vm.runInContext('startGesture();changeBreak(-1);finishGesture()',c);assert.equal(bpm,169);assert.equal(bankChanges,0);assert.equal(vm.runInContext('motif.size',c),1);
+vm.runInContext('changeBreak(1)',c);assert.equal(bankChanges,1);
+c.running=true;vm.runInContext('startGesture();draft.set(2,[.5,0,0,.5]);changeBreak(1);finishGesture()',c);assert.equal(bpm,168);assert.equal(vm.runInContext('motif.has(0)&&!motif.has(2)&&!gestureHeld&&!gestureTempo',c),true);
+vm.runInContext('startGesture();finishGesture()',c);assert.equal(vm.runInContext('motif.size',c),0,'ordinary empty Gesture still clears');
+c.percussionNotes=()=>[{phase:0,primary:true,levels:[1,0,0,.5]}];
+vm.runInContext(s.slice(s.indexOf('const percussionTrims='),s.indexOf('function playPercussion(')),c);
+vm.runInContext('percussionStep()',c);assert.equal(played[0],'accent2');assert(Math.abs(played[2]-1.00714*.4*.5)<1e-9);
+c.active.name='Think';vm.runInContext('percussionStep()',c);assert(Math.abs(played[2]-.5*.4)<1e-9);
+console.log('Gesture controls: stopped/playing tempo adjustment, bank preservation, motif preservation, ordinary clear, and bank-specific gain passed.');

@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-17T18:32:21.079333+00:00",
+  "title": "Design System: Jungle Box SP\u20131",
+  "extensions": {
+    "colorMeta": {
+      "red": {
+        "role": "primary",
+        "displayName": "Transport red"
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Warm paper"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Printed ink"
+      }
+    },
+    "shadows": [
+      {
+        "name": "button",
+        "value": "0 2px 3px #30332f20",
+        "purpose": "Raised physical controls."
+      },
+      {
+        "name": "button-pressed",
+        "value": "inset 0 2px 3px #30332f24",
+        "purpose": "Held or pressed controls."
+      },
+      {
+        "name": "instrument-filter",
+        "value": "drop-shadow(0 8px 8px #34382d14)",
+        "purpose": "CSS filter on the complete unfolded net."
+      }
+    ],
+    "motion": [],
+    "breakpoints": [
+      {
+        "name": "compact",
+        "value": "560px"
+      }
+    ],
+    "materials": {
+      "metal": "linear-gradient(115deg,#e0e1de,#f5f5f1 48%,#d5d7d3)"
+    },
+    "focus": {
+      "outline": "3px solid #a0372c",
+      "outlineOffset": "4px"
+    }
+  },
+  "components": [
+    {
+      "name": "Transport",
+      "kind": "button",
+      "refersTo": "transport",
+      "description": "Transport from the unfolded instrument.",
+      "html": "<button class=\"ds-button\">\u25b6 Play</button>",
+      "css": ".ds-button{border:1px solid #9b9e97;border-radius:3px;background:linear-gradient(#f4f4ee,#d4d6cf);box-shadow:0 2px 3px #30332f20;min-height:44px;color:#30332f;font:16px Arial,Helvetica,sans-serif;cursor:pointer;width:42px;height:96px;writing-mode:vertical-rl;font-size:14px;color:#9e3028;}.ds-button:hover{filter:brightness(.96)}.ds-button:active,.ds-button[aria-pressed=true]{background:#b8bcb2;box-shadow:inset 0 2px 3px #30332f24}.ds-button:focus-visible{outline:3px solid #a0372c;outline-offset:4px}"
+    },
+    {
+      "name": "Volume",
+      "kind": "button",
+      "refersTo": "volume-button",
+      "description": "Volume from the unfolded instrument.",
+      "html": "<button class=\"ds-button\" aria-label=\"Volume up\">+</button>",
+      "css": ".ds-button{border:1px solid #9b9e97;border-radius:3px;background:linear-gradient(#f4f4ee,#d4d6cf);box-shadow:0 2px 3px #30332f20;min-height:44px;color:#30332f;font:16px Arial,Helvetica,sans-serif;cursor:pointer;width:36px;border-radius:50%;font-size:20px;}.ds-button:hover{filter:brightness(.96)}.ds-button:active,.ds-button[aria-pressed=true]{background:#b8bcb2;box-shadow:inset 0 2px 3px #30332f24}.ds-button:focus-visible{outline:3px solid #a0372c;outline-offset:4px}"
+    },
+    {
+      "name": "Performance pad",
+      "kind": "button",
+      "refersTo": "performance-pad",
+      "description": "Performance pad from the unfolded instrument.",
+      "html": "<button class=\"ds-button\" aria-pressed=\"false\">Fill</button>",
+      "css": ".ds-button{border:1px solid #9b9e97;border-radius:3px;background:linear-gradient(#f4f4ee,#d4d6cf);box-shadow:0 2px 3px #30332f20;min-height:44px;color:#30332f;font:16px Arial,Helvetica,sans-serif;cursor:pointer;width:38px;height:72px;writing-mode:vertical-rl;padding:6px 7px;font-size:11px;touch-action:none;user-select:none;}.ds-button:hover{filter:brightness(.96)}.ds-button:active,.ds-button[aria-pressed=true]{background:#b8bcb2;box-shadow:inset 0 2px 3px #30332f24}.ds-button:focus-visible{outline:3px solid #a0372c;outline-offset:4px}"
+    },
+    {
+      "name": "Audition",
+      "kind": "button",
+      "refersTo": "button",
+      "description": "Audition from the unfolded instrument.",
+      "html": "<button class=\"ds-button\">Kick</button>",
+      "css": ".ds-button{border:1px solid #9b9e97;border-radius:3px;background:linear-gradient(#f4f4ee,#d4d6cf);box-shadow:0 2px 3px #30332f20;min-height:44px;color:#30332f;font:16px Arial,Helvetica,sans-serif;cursor:pointer;padding:6px 10px;font-size:12px;}.ds-button:hover{filter:brightness(.96)}.ds-button:active,.ds-button[aria-pressed=true]{background:#b8bcb2;box-shadow:inset 0 2px 3px #30332f24}.ds-button:focus-visible{outline:3px solid #a0372c;outline-offset:4px}"
+    },
+    {
+      "name": "Break selector",
+      "kind": "input",
+      "description": "Native underlined break selection.",
+      "html": "<label class=\"ds-label\">Break <select class=\"ds-select\"><option>Amen</option><option>Think</option></select></label>",
+      "css": ".ds-label{font:14px Arial,Helvetica,sans-serif;color:#30332f}.ds-select{font:16px Arial,Helvetica,sans-serif;color:inherit;background:transparent;border:0;border-bottom:1px solid #a6a8a2;padding:6px 24px 6px 4px;cursor:pointer}.ds-select:focus-visible{outline:3px solid #a0372c;outline-offset:4px}"
+    },
+    {
+      "name": "Vertical fader",
+      "kind": "input",
+      "description": "Native vertical musical parameter, with WebKit and Firefox track styling.",
+      "html": "<label class=\"ds-fader\">Weight<input type=\"range\" aria-label=\"Weight\" value=\"42\"></label>",
+      "css": ".ds-fader{display:flex;flex-direction:column;align-items:center;font:600 15px Arial,Helvetica,sans-serif;color:#30332f}.ds-fader input{appearance:none;writing-mode:vertical-lr;direction:rtl;width:44px;height:154px;margin:14px 0 12px;background:transparent;cursor:ns-resize}.ds-fader input:focus-visible{outline:3px solid #a0372c;outline-offset:4px}.ds-fader input::-webkit-slider-runnable-track{width:12px;border:2px solid #eff0eb;border-radius:7px;background:linear-gradient(90deg,#737971,#a6aaa1);box-shadow:inset 1px 0 2px #30332f55}.ds-fader input::-webkit-slider-thumb{appearance:none;width:24px;height:22px;margin-left:-8px;background:linear-gradient(90deg,#c8cbc2,#f5f5ef 60%,#d9dcd2);border:1px solid #a2a79c;border-radius:9px;box-shadow:0 3px 3px #30332f30}.ds-fader input::-moz-range-track{width:10px;height:100%;border:2px solid #eff0eb;border-radius:7px;background:#90968b}.ds-fader input::-moz-range-thumb{width:24px;height:22px;border:1px solid #a2a79c;border-radius:9px;background:#e8eae1}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The unfolded SP\u20131",
+    "overview": "This scoped instrument surface follows the user's paper-box brief: silver face, top, left and right panels, laid flat with visible folds. The Adafruit photographs recorded in `references/sp1/README.md` establish the physical cues; proportions are estimates adapted for readable musical controls. This document captures `junglebox.html` and `junglebox.css`, not a broader product identity.",
+    "keyCharacteristics": [
+      "Silver gradients and dashed fold seams.",
+      "Four parallel faders and narrow performance pads.",
+      "Practical printed legends and restrained red state indicators."
+    ],
+    "rules": [],
+    "dos": [
+      "Do preserve the face, top, left and right paper-net arrangement on this instrument.",
+      "Do keep existing musical control labels and readable legends when adjusting proportions.",
+      "Do use source photographs as approximate physical references and retain their attribution."
+    ],
+    "donts": [
+      "Don't add bottom or rear panels to this scoped surface.",
+      "Don't sacrifice practical control legibility to reproduce the device's exact aspect ratio.",
+      "Don't use the reference photos' blue research annotations as UI decoration."
+    ]
+  },
+  "hardwareLayout": {
+    "volume": "top left; circular",
+    "grille": "top aluminum; 2 rows x 5 columns",
+    "rocker": "left; up/down; label reads top to bottom",
+    "plastic": {
+      "color": "#eeede7",
+      "faceWidth": "6.5%",
+      "extendsTo": "top strip and right panel"
+    },
+    "background": "#83f2d1",
+    "beatLEDs": "four vertically on right panel",
+    "faceMarks": "red play triangle and two vertical function indicators",
+    "omitted": [
+      "side recesses",
+      "panel names",
+      "unfolded caption",
+      "photo references"
+    ]
+  },
+  "keyboardShortcuts": {
+    "ArrowUp": "previous break",
+    "ArrowDown": "next break",
+    "+ / = / NumpadAdd": "volume up",
+    "- / NumpadSubtract": "volume down",
+    "nativeFields": "preserve native input navigation",
+    "indicators": "bold 11px monospace, no separator bullets"
+  },
+  "typeset": {
+    "stylesheet": "typography.css",
+    "background": "#83f2d1",
+    "display": {
+      "family": "Georgia, serif",
+      "weight": 700,
+      "style": "italic",
+      "size": "2.75rem",
+      "compact": "2.25rem",
+      "leading": 1.1
+    },
+    "body": {
+      "family": "Arial, Helvetica, sans-serif",
+      "size": "1rem",
+      "leading": 1.6,
+      "measure": "65ch"
+    },
+    "section": "1.5rem / 1.25 / 700",
+    "subsection": "1.125rem / 1.35 / 700",
+    "metadata": ".875rem / 1.5",
+    "shortcuts": "11px / 700 / ui-monospace, SFMono-Regular, Consolas, monospace"
+  }
+}
