@@ -63,6 +63,4 @@ Run the browser engine checks with Node.js:
 for test in tests/*.cjs; do node "$test" || exit 1; done
 ```
 
-The [Pages workflow](.github/workflows/pages.yml) publishes the browser demo when changes land on `main`.
-
 </details>
